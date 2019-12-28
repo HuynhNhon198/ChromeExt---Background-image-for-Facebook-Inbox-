@@ -1,0 +1,49 @@
+{
+    "name": "Background For FB Inbox - Huynh Nhọn",
+    "description": "Tiện ích giúp chèn hình nền vào khung chat trong facebook.com và facebook.com/messages",
+    "version": "1.0.4",
+    "browser_action": {
+        "default_icon": {
+            "16": "images/get_started16.png",
+            "32": "images/get_started32.png",
+            "48": "images/get_started48.png",
+            "128": "images/get_started128.png"
+        },
+        "default_title": "Background For FB Inbox"
+    },
+    "background": {
+        "scripts": ["background/bg.js"]
+    },
+    "web_accessible_resources": [
+        "images/*.png",
+        "lib/css/icon.css",
+        "app-content/facebook/template.html",
+        "app-content/messenger/template.html"
+    ],
+    "icons": {
+        "16": "images/get_started16.png",
+        "32": "images/get_started32.png",
+        "48": "images/get_started48.png",
+        "128": "images/get_started128.png"
+    },
+    "content_scripts": [{
+        "matches":["https://www.facebook.com/*", "https://www.messenger.com/*"],
+        "js": [
+            "lib/jquery/jquery-2.1.3.min.js",
+            "lib/bootstrap/js/bootstrap.min.js", 
+            "lib/angular/1.5.9/angular.min.js",
+            "lib/noty/js/noty.min.js",
+            "content.js",
+            "app-content/app.js",
+            "app-content/facebook/controller.js",
+            "app-content/messenger/controller.js"
+        ],
+        "css": ["lib/noty/css/noty.css", "lib/css/content.css", "lib/css/custom-bootstrap.css", "lib/css/icon.css", "lib/css/facebook.css"],
+        "run_at": "document_end"
+    }],
+    "permissions": [
+        "tabs",
+        "storage"
+    ],
+   "manifest_version": 2
+}

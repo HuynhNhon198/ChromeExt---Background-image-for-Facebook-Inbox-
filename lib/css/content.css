@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:500,600,700&display=swap');
+
+i.context.material-icons {
+    color: #3578e5;
+    font-size: 20px;
+    margin-right: 10px;
+    margin-left: -2px;
+}
+._6ff7:hover {
+    background: #3578e524 !important;
+}
+
+input#image-url {
+    margin: 5px 0;
+    width: 76%;
+    display: inline-block;
+    padding: 6px 5px;
+    border: #9bc0ff solid 2px;
+    background: #3578e50d;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+h4#important-msg-label {
+    margin: 10px 0;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Quicksand', sans-serif !important;
+}
+.modal button.btn {
+    /* display: block !important; */
+    padding: 8px;
+    background: #3578e5;
+    color: #fff;
+    border: unset;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.modal {
+    font-family: 'Quicksand', sans-serif;
+}
+
+button.btn.success {
+    background: #25e32b;
+}
