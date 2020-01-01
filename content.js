@@ -10,6 +10,8 @@ function myMain(evt) {
             clearInterval(jsInitChecktimer);
             document.getElementsByTagName("body")[0].setAttribute("ng-app", "myapp");
             document.getElementsByTagName("body")[0].setAttribute("ng-csp", "");
+            let icon = chrome.runtime.getURL('lib/css/icon.css')
+            $('head').append('<link rel="stylesheet" type="text/css" href="' + icon + '">');
             switch (true) {
 
                 case $(location).attr('href').indexOf('facebook.com/messages') !== -1 || $(location).attr('href').indexOf('www.messenger.com') !== -1:

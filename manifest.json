@@ -1,7 +1,7 @@
 {
     "name": "Background For FB Inbox - Huynh Nhọn",
     "description": "Tiện ích giúp chèn hình nền vào khung chat trong facebook.com và facebook.com/messages",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "browser_action": {
         "default_icon": {
             "16": "images/get_started16.png",
@@ -11,12 +11,15 @@
         },
         "default_title": "Background For FB Inbox"
     },
+    "options_page": "options.html",
     "background": {
-        "scripts": ["background/bg.js"]
+        "scripts": ["background/bg.js"],
+        "persistent": true
     },
     "web_accessible_resources": [
-        "images/*.png",
+        "images/*.jpg",
         "lib/css/icon.css",
+        "lib/css/font.woff2",
         "app-content/facebook/template.html",
         "app-content/messenger/template.html"
     ],
@@ -27,10 +30,10 @@
         "128": "images/get_started128.png"
     },
     "content_scripts": [{
-        "matches":["https://www.facebook.com/*", "https://www.messenger.com/*"],
+        "matches": ["https://www.facebook.com/*", "https://www.messenger.com/*"],
         "js": [
             "lib/jquery/jquery-2.1.3.min.js",
-            "lib/bootstrap/js/bootstrap.min.js", 
+            "lib/bootstrap/js/bootstrap.min.js",
             "lib/angular/1.5.9/angular.min.js",
             "lib/noty/js/noty.min.js",
             "content.js",
@@ -38,12 +41,13 @@
             "app-content/facebook/controller.js",
             "app-content/messenger/controller.js"
         ],
-        "css": ["lib/noty/css/noty.css", "lib/css/content.css", "lib/css/custom-bootstrap.css", "lib/css/icon.css", "lib/css/facebook.css"],
+        "css": ["lib/noty/css/noty.css", "lib/css/content.css", "lib/css/custom-bootstrap.css", "lib/css/facebook.scss"],
         "run_at": "document_end"
     }],
     "permissions": [
         "tabs",
         "storage"
     ],
-   "manifest_version": 2
+    "content_security_policy": "font-src https://fonts.gstatic.com/ https://fonts.googleapis.com/ ; script-src 'self'; object-src 'self'",
+    "manifest_version": 2
 }

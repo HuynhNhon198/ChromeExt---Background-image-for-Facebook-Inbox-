@@ -10,9 +10,10 @@ app.controller("messCtrl", function ($scope) {
     function getBGMess() {
         var temp = 0;
         var timer = setInterval(function () {
-            var $nameElement = $("span._3oh- a");
-            let uid = $nameElement.attr("uid");
-            $scope.username = $nameElement.text();
+            var $activeUser = $("li._1ht1._6zk9._1ht2 > div._5l-3._1ht5");
+            console.log($activeUser.attr("data-testid"));
+            let uid = $activeUser.attr("data-testid").match(/\d+/)[0];
+            $scope.username = $activeUser.find('span._1ht6._7st9').text();
             if (uid !== temp) {
                 clearInterval(timer);
                 $(".add-bg").remove();
@@ -25,64 +26,92 @@ app.controller("messCtrl", function ($scope) {
                 </a>
             </li>`);
                 temp = uid;
-                chrome.storage.local.get("bgChat_HuynhNhon", function (obj) {
-                    var bgInfo = obj.bgChat_HuynhNhon.find(x => x.uid == uid);
-                    if (bgInfo !== undefined) {
+                chrome.storage.local.get("bgChatMess_HuynhNhon", function (obj) {
+                    var bgInfo = obj.bgChatMess_HuynhNhon.find(x => x.uid == uid);
+                    if(bgInfo) {
                         setTimeout(function () {
-                            $nameElement
-                                .parents("._20bp")
-                                .find("._4_j4")
-                                .attr(
-                                    "style",
-                                    "background-image: url('" + bgInfo.bgUrl + "') !important;"
-                                );
+                            $activeUser
+                            .parents("._li")
+                            .attr(
+                                "style",
+                                "background: url(" + bgInfo.bgUrl + ");background-size: cover; background-position: center center"
+                            );
                         }, 200);
+                    }else {
+                        let bg = chrome.extension.getURL("/images/bg.jpg");
+                        $activeUser
+                            .parents("._li")
+                            .attr(
+                                "style",
+                                "background: url(" + bg + ");background-size: cover; background-position: center center"
+                            );
                     }
                 });
                 $(".add-bg").click(function (event) {
-                    chrome.storage.local.get("bgChat_HuynhNhon", function (obj) {
-                        let list = obj.bgChat_HuynhNhon || [];
-                        console.log(list);
+                    chrome.storage.local.get("bgChatMess_HuynhNhon", function (obj) {
+                        let list = obj.bgChatMess_HuynhNhon || [];
+
                         let ind = list.findIndex(x => x.uid == uid);
                         if (ind !== -1) {
                             $scope.image_url = list[ind].bgUrl;
+                            $scope.history = list[ind].historyBg
                         } else $scope.image_url = "";
                         $scope.id = uid;
 
                         $scope.$apply();
                         $("#modal_change_bg").modal();
+                        $scope.selectImgFromHistory = function (i) {
+                            if (i !== $scope.image_url) {
+                                $scope.image_url = i;
+                            }
+                        }
                         $scope.save = function () {
                             let index = list.findIndex(x => x.uid == uid);
                             if ($scope.image_url !== "") {
-                                if (index !== -1) list[index].bgUrl = $scope.image_url;
-                                else
+                                if (index !== -1) {
+                                    list[index].historyBg = list[index].historyBg || []
+                                    if (!list[index].historyBg.includes(list[index].bgUrl))
+                                        list[index].historyBg.push(list[index].bgUrl)
+                                    list[index].bgUrl = $scope.image_url;
+                                } else
                                     list.push({
                                         uid: $scope.id,
                                         username: $scope.username,
-                                        bgUrl: $scope.image_url
+                                        bgUrl: $scope.image_url,
+                                        historyBg: []
                                     });
                             } else {
                                 if (index !== -1) list.splice(index, 1);
                             }
                             chrome.storage.local.set({
-                                    bgChat_HuynhNhon: list
+                                    bgChatMess_HuynhNhon: list
                                 },
                                 function () {
                                     $("#modal_change_bg").modal("hide");
                                     if ($scope.image_url == '') {
                                         location.reload();
                                     } else {
-                                        chrome.storage.local.get("bgChat_HuynhNhon", function (obj) {
-                                            var bgInfo = obj.bgChat_HuynhNhon.find(x => x.uid == uid);
-                                            setTimeout(function () {
-                                                $nameElement
-                                                    .parents("._20bp")
-                                                    .find("._4_j4")
+                                        chrome.storage.local.get("bgChatMess_HuynhNhon", function (obj) {
+                                            var bgInfo = obj.bgChatMess_HuynhNhon.find(x => x.uid == uid);
+                                            if(bgInfo) {
+                                                setTimeout(function () {
+                                                    $activeUser
+                                                    .parents("._li")
                                                     .attr(
                                                         "style",
-                                                        "background-image: url('" + bgInfo.bgUrl + "') !important;"
+                                                        "background: url(" + bgInfo.bgUrl + ");background-size: cover; background-position: center center"
                                                     );
-                                            }, 200);
+                                                }, 200);
+                                            }else {
+                                                let bg = chrome.extension.getURL("/images/bg.jpg");
+                                                $activeUser
+                                                    .parents("._li")
+                                                    .attr(
+                                                        "style",
+                                                        "background: url(" + bg + ");background-size: cover; background-position: center center"
+                                                    );
+                                            }
+                                            
                                         });
                                     }
 

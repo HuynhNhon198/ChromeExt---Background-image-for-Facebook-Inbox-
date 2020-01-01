@@ -5,8 +5,15 @@ chrome.storage.local.get('bgChat_HuynhNhon', function (obj) {
         });
     }
 })
-chrome.browserAction.onClicked.addListener(function(activeTab)
-{
-    var newURL = "https://www.facebook.com/huynhnhon198";
-    chrome.tabs.create({ url: newURL });
+chrome.storage.local.get('bgChatMess_HuynhNhon', function (obj) {
+    if (Object.keys(obj).length === 0) {
+        chrome.storage.local.set({
+            bgChatMess_HuynhNhon: []
+        });
+    }
+})
+chrome.browserAction.setPopup({popup:''});  //disable browserAction's popup
+
+chrome.browserAction.onClicked.addListener(()=>{
+    chrome.tabs.create({url:'options.html'});
 });

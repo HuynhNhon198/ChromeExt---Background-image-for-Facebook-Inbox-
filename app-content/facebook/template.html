@@ -13,10 +13,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="edit">
+                        <div class="history" ng-show='history.length > 0'>
+                            <img ng-repeat='i in history' src="{{i}}" ng-click="selectImgFromHistory(i)" title="click để chọn" alt="">
+                        </div>
                         <input type="text" id="image-url" ng-model="image_url"
                             placeholder="Nhập Link Ảnh Online Của Bạn Tại Đây..." title="{{image_url}}">
                         or
-                        <button type="button" ng-click="upload()" class="close btn">UPLOAD</button>
+                        <button type="button" ng-click="upload()" class="close btn" title="Tải ảnh lên từ máy của bạn">UPLOAD</button>
                         <div style="height:0px;overflow:hidden">
                             <input type="file" id="fileInput" name="fileInput" accept="image/*" />
                         </div>
