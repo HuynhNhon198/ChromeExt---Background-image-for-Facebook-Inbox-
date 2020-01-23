@@ -16,6 +16,7 @@
 
 ._1enh._7q1s {
   background: #00000042;
+  backdrop-filter: blur(2px);
 }
 
 ._1ht1._6zk9 {
@@ -24,10 +25,17 @@
   border-radius: 5px;
   transition: all 0.3s ease;
   border: #0000 solid 2px;
+  border: #ffffff12 solid 1px;
   border-left: #2196F3 solid;
   /* font-family: 'Quicksand'; */
 }
-
+._4dfu{
+  background-image: unset !important;
+}
+._3hx- ._5yn {
+  background-color: #0000 !important;
+  border-bottom: unset !important;
+}
 li._5l-3:hover {
   box-shadow: 1px 1px #53a7ea, 2px 2px #53a7ea, 3px 3px #53a7ea;
   -webkit-transform: translateX(-3px);
@@ -84,15 +92,23 @@ abbr._1ht7._6zkh.timestamp {
     background: #0000 !important;
   }
 }
-
+._7t1o {
+  background-color: #fafafa00 !important;
+  ._7kpk {
+    background: #0d0d0d !important;
+}
+}
 ._1ht3 ._1htf {
   color: #03A9F4 !important;
 }
 
 ._1ht1._6zk9._1ht2 {
   background: #00000091 !important;
+  border-left: #4CAF50 solid 3px !important;
 }
-
+._52mr._2poz._ui9._4skb._5i_d {
+  background: #fff;
+}
 g#Settings path,
 g#compose path {
   fill: white !important
@@ -111,17 +127,23 @@ span._1ht6._7st9 {
   color: #fff;
   padding: 5px;
   background: #00000091;
-  padding: 5px 8px !important;
+  padding: 2px 8px 5px 8px !important;
   border-radius: 6px;
   margin-bottom: 3px;
 }
-
+a._1ht5._2il3._6zka._5l-3._3itx {
+  margin-top: 3px;
+}
+._2il3._6zka {
+  padding-left: 0px !important;
+}
 ._1lj0._6ybm {
   color: rgb(207, 207, 207) !important;
 }
 
 ._4_j5 {
   flex: 0 2 23.33% !important;
+  border-left: unset !important;
 }
 
 ._6ybv,
@@ -144,6 +166,9 @@ span._1ht6._7st9 {
   padding: 7px;
   /* border-radius: 20px; */
 }
+._6ynl {
+  box-shadow: 13px 3px 20px 7px rgba(0, 0, 0, 0.14) !important;
+}
 
 a._3m31 {
   border: unset !important;
@@ -154,22 +179,31 @@ div._3m31 {
   border-radius: 6px;
   border: #00000030 solid 1px;
 }
-
+._7st9 {
+  color: rgb(255, 255, 255) !important;
+}
 ._3m31:nth-of-type(3n+1) {
   border-right: unset !important;
 }
-
+a[data-href="https://www.messenger.com/new#"] ._1qt3._5l-3 {
+  background: #fff;
+  border-radius: 4px;
+}
 ._5irm._7mkm {
   background: #0000009c !important;
   color: #fff;
   border-radius: 25px;
   /* margin: 5px; */
 }
-
+._5743._6y4y {
+  visibility: hidden;
+}
 ._1qt5._6zkd {
   max-width: 100%;
 }
-
+._7sta._7stb._87u_ img {
+  border-radius: 25px !important;
+}
 ._ih3 {
   width: fit-content;
   background: #0006;
@@ -177,7 +211,15 @@ div._3m31 {
   color: rgb(202, 202, 202) !important;
   border-radius: 25px 25px 25px 0;
 }
-
+._3tkv {
+  padding-top: unset !important; 
+}
+._1jt6._710_ {
+  padding-top: 23px;
+}
+g#dots-3-horizontal g {
+  fill: white !important;
+}
 ._8slc {
   color: rgb(255, 255, 255) !important;
   width: fit-content;
@@ -203,6 +245,7 @@ div._3m31 {
 ._4_j5 {
   background: #0000000f;
   transition: all 0.3s ease;
+  backdrop-filter: blur(2px);
 }
 
 a._4rph {
@@ -219,7 +262,9 @@ a._4rph {
   background: #00000042;
   transition: all 0.3s ease;
 }
-
+._7kpk {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
 ._1liy ._1lj0:hover {
   background-color: rgba(0, 0, 0, 0.26);
 }
@@ -235,20 +280,30 @@ a._4rph {
   background: #0000 !important;
 }
 ._7q1p, ._7q1m, ._7q1n {
-  border: 2px solid #2196F3 !important;
+  border: unset !important;
 }
-
+._4_j5 ._1mf._1mj {
+  background: #0000005c;
+  padding: 10px 0;
+  color: #c4c4c4;
+  border-radius: 6p;
+}
 ._3hx- ._1i6a {
   background: #fff !important;
   /* background: url("https://i.imgur.com/u558Rbj.jpg") !important; */
   background-size: cover !important;
   background-position-y: center !important;
 }
-
+._7q1q {
+  color: #2196F3 !important;
+}
 ._4_j4 {
   /* background: url("https://i.imgur.com/u558Rbj.jpg") !important; */
   background-size: cover !important;
   background-position-y: center !important;
+}
+._7q1p {
+  background-color: rgba(0, 0, 0, 0.33) !important;
 }
 ._497p._uwj span._3oh- {
   background: #00000091;

@@ -14,17 +14,28 @@
                 <div class="modal-body">
                     <div class="edit">
                         <div class="history" ng-show='history.length > 0'>
-                            <img ng-repeat='i in history' src="{{i}}" ng-click="selectImgFromHistory(i)" title="click để chọn" alt="">
+                            <img ng-repeat='i in history' ng-show="i !== image_url" src="{{i}}"
+                                ng-click="selectImgFromHistory(i)" title="click để chọn" alt="">
                         </div>
+                        {{url}}
+                        <p>Bạn nên chọn ảnh có tỉ lệ kích thước 2:3 và KHÔNG nên up ảnh nhảy cảm của bạn thân.</p>
                         <input type="text" id="image-url" ng-model="image_url"
                             placeholder="Nhập Link Ảnh Online Của Bạn Tại Đây..." title="{{image_url}}">
                         or
-                        <button type="button" ng-click="upload()" class="close btn" title="Tải ảnh lên từ máy của bạn">UPLOAD</button>
+                        <button type="button" ng-click="upload()" class="close btn"
+                            title="Tải ảnh lên từ máy của bạn">UPLOAD</button>
                         <div style="height:0px;overflow:hidden">
-                            <input type="file" id="fileInput" name="fileInput" accept="image/*" />
+                            <form id='fileupload'>
+                                <input type="file" id="fileInput" name="fileInput" accept="image/*" />
+                            </form>
                         </div>
                         <br>
                         <img src="{{image_url}}" width="100%" alt="">
+                        <br>
+                        <span id="credit"><a
+                                href="https://chrome.google.com/webstore/detail/background-for-fb-inbox-h/dmfldfkgdnpkjcmckjgjpmkklgkchjde"
+                                target="_blank">Link Tải</a> - Make with <b style="color: #c02a2a;">❤</b> by <a
+                                href="https://www.facebook.com/huynhnhon198" target="_blank">Huynh Nhọn</a></span>
                     </div>
                 </div>
             </div>

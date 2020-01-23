@@ -52,5 +52,12 @@ div.history img {
     width: auto;
     padding: 5px;
     cursor: pointer;
+    display: inline-block;
     /* border-radius: 4px; */
+}
+span#credit {
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-weight: 500;
 }

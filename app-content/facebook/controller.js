@@ -1,8 +1,23 @@
-app.controller("facebookCtrl", function ($scope) {
+app.controller("facebookCtrl", async function ($scope, setInfo, storeImage) {
     $scope.url = $(location).attr("href");
     $scope.image_url = "";
-
+    var id_own = $('img._2qgu._7ql._1m6h.img').attr('id').match(/(\d+)/)[0];
+    await setInfo.set(id_own);
+    
     var num = 0;
+    var datas = [];
+
+    chrome.storage.local.get("facebookBG", function (obj) {
+        datas = obj.facebookBG || [];
+    });
+
+    chrome.storage.onChanged.addListener(function (changes) {
+        if (changes.facebookBG) {
+            datas = changes.facebookBG.newValue;
+            setBg()
+        }
+    })
+
     setInterval(function () {
         if ($("._5qi9._5qib:not(._3001)").length !== num) {
             num = $("._5qi9._5qib:not(._3001)").length;
@@ -12,10 +27,10 @@ app.controller("facebookCtrl", function ($scope) {
     }, 1000);
 
     function setOption() {
-        console.log('set+op');
+
         $("._461_").unbind("click");
         $("._461_").click(function (event) {
-            console.log("click");
+
             let a_el = $(this)
                 .parents("._5qi9._5qib > div")
             let id = a_el.attr('class').split(':')[1].toString();
@@ -38,48 +53,27 @@ app.controller("facebookCtrl", function ($scope) {
                   </li>`
                 );
                 $(".add-bg").click(function (event) {
-                    chrome.storage.local.get("bgChat_HuynhNhon", function (obj) {
-                        let list = obj.bgChat_HuynhNhon || [];
-                        let ind = list.findIndex(x => x.uid == id);
-                        if (ind !== -1) {
-                            $scope.history = list[ind].historyBg
-                            $scope.image_url = list[ind].bgUrl;
+                    $("#modal_change_bg").modal();
+                    storeImage.getData('facebookBG',id_own,$scope.id ).then(data=>{
+                        $scope.history = [];
+                        $scope.docid = '';
+                        if (!jQuery.isEmptyObject(data) ) {
+                            $scope.docid = data.id
+                            $scope.history = data.history
+                            $scope.image_url = data.imgUrl;
                         } else $scope.image_url = "";
-
-
                         $scope.$apply();
-                        $("#modal_change_bg").modal();
-                        $scope.selectImgFromHistory = function(i){
-                            if(i !== $scope.image_url) {
+                        
+                        $scope.selectImgFromHistory = function (i) {
+                            if (i !== $scope.image_url) {
                                 $scope.image_url = i;
                             }
                         }
                         $scope.save = function () {
-                            let index = list.findIndex(x => x.uid == id);
-                            if ($scope.image_url !== "") {
-                                
-                                if (index !== -1) {
-                                    list[index].historyBg = list[index].historyBg || []
-                                    if(!list[index].historyBg.includes(list[index].bgUrl))
-                                        list[index].historyBg.push(list[index].bgUrl)
-                                    list[index].bgUrl = $scope.image_url;
-                                }
-                                else
-                                    list.push({
-                                        uid: $scope.id,
-                                        username: $scope.username,
-                                        bgUrl: $scope.image_url,
-                                        historyBg: []
-                                    });
-                            } else {
-                                if (index !== -1) list.splice(index, 1);
-                            }
-
-                            chrome.storage.local.set({
-                                bgChat_HuynhNhon: list
-                            });
-                            $("#modal_change_bg").modal("hide");
-                            setBg();
+                            storeImage.save('facebookBG', id_own, $scope.id, $scope.image_url, $scope.username, $scope.history, $scope.docid).then(() => {
+                                $("#modal_change_bg").modal("hide");
+                                setBg();
+                            })
                         };
                         $scope.upload = function () {
                             $("#fileInput").unbind('click')
@@ -88,63 +82,27 @@ app.controller("facebookCtrl", function ($scope) {
                         $("#fileInput").unbind('change')
                         $("#fileInput").on("change", function () {
                             var $files = $(this).get(0).files;
-                            var n = new Noty({
-                                    layout: "topLeft",
-                                    theme: "relax",
-                                    type: "warning",
-                                    text: "ĐANG UPLOAD..."
-                                })
-                                .on("afterShow", function () {
-                                    var settings = {
-                                        async: false,
-                                        crossDomain: true,
-                                        processData: false,
-                                        contentType: false,
-                                        type: "POST",
-                                        url: "https://api.imgur.com/3/image",
-                                        headers: {
-                                            Authorization: "Client-ID 1a75998a3de24bd",
-                                            Accept: "application/json"
-                                        },
-                                        mimeType: "multipart/form-data"
-                                    };
-                                    var formData = new FormData();
-                                    formData.append("image", $files[0]);
-                                    settings.data = formData;
-
-                                    $.ajax(settings).done(function (response) {
-                                        n.close();
-                                        var obj = JSON.parse(response);
-                                        $scope.image_url = obj.data.link;
-                                        $scope.$apply();
-                                    });
-                                })
-                                .show();
-                            // Replace ctrlq with your own API key
+                            storeImage.upload($files[0], 'facebook', id_own).then(url => {
+                                $scope.image_url = url;
+                                $scope.$apply();
+                            });
                         });
-                    });
+                    })
+                    
                 });
             }, 500);
         });
     }
 
-
-
     function setBg() {
-        console.log('set_bg');
+
         // setTimeout(function () {
-        chrome.storage.local.get("bgChat_HuynhNhon", function (obj) {
-            if (obj.bgChat_HuynhNhon.length > 0) {
+        if (datas.length > 0) {
+            $('._5qi9._5qib > div.opened').each(function () {
 
-                // obj.bgChat_HuynhNhon.forEach(val => {
-
-                // });
-
-                $('._5qi9._5qib > div.opened').each(function () {
-                    console.log($(this).attr('class'));
-                    let id = $(this).attr('class').toString().split(':')[1];
-                    let data = obj.bgChat_HuynhNhon.find(x => x.uid == id);
-                    if (data) {
+                let id = $(this).attr('class').toString().split(':')[1];
+                storeImage.getData('facebookBG',id_own, id ).then(data=>{
+                    if (!jQuery.isEmptyObject(data)) {
                         var chatWindow = $(this).find(
                             "a._2yg8"
                         );
@@ -157,8 +115,8 @@ app.controller("facebookCtrl", function ($scope) {
                             .find("._1i6a")
                             .attr(
                                 "style",
-                                "background-image : url('" + data.bgUrl + "') !important"
-                            );
+                                'background-image : url("' + data.imgUrl + '") !important; background-position: center center!important; background-size: cover!important'
+                            )
                         chatWindow
                             .parents("._6vu5._6z9d.fbNubFlyoutInner._6vu1")
                             .attr(
@@ -176,8 +134,9 @@ app.controller("facebookCtrl", function ($scope) {
                             );
                     }
                 })
-            }
-        });
+                
+            })
+        }
         // }, 1000)
 
     }
